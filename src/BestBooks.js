@@ -2,12 +2,14 @@ import React from 'react';
 import axios from 'axios';
 import Carousel from 'react-bootstrap/Carousel';
 import Card from 'react-bootstrap/Card';
+import BookFormModal from './BookFormModal'; 
 
 class BestBooks extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      books: []
+      books: [],
+      openModal: false
     };
   }
 
@@ -29,35 +31,112 @@ class BestBooks extends React.Component {
     this.getBooks();
   }
 
-  render() {
-    /* TODO: render all the books in a Carousel */
+// **** ADD CAT TO DB USING 2 HANDLERS ****
 
-    return (
-      <>
-        <h2>My Essential Lifelong Learning &amp; Formation Shelf</h2>
-        <Carousel>
-          {this.state.books.length > 0 ? (
-            this.state.books.map((book, index) => (
-              <Carousel.Item key={index}>
-                <Card className="books-card">
-                  <Card.Img src={book.image} alt={book.title} />
-                  <Card.Body>
-                    <Card.Title>{book.title}</Card.Title>
-                    <Card.Text>
-                      <p>Description: {book.description}</p>
-                      {/* <p>Status: {book.status}</p> */}
-                    </Card.Text>
-                  </Card.Body>
-                </Card>
-              </Carousel.Item>
-            ))
-          ) : (
-            <h3>No Books Found :</h3>
-          )}
-        </Carousel>
-      </>
-    );
+// *** 1ST HANDLER IS GOING TO BUILD THE CAT OBJECT USING THE FORM DATA ****
+
+
+
+// *** 2nd HANDLER - POST THE Book OBJECT TO THE DATABASE AND UPDATE STATE WITH THE NEW CREATED Book****
+postBook = async (bookObj) => {
+try {
+// TODO: build the url for axios to use
+  let url = `${process.env.REACT_APP_SERVER}/books`;
+
+// *** ON A POST - axios will take in 2 args. 1st - url, 2nd - data which is carried over on the req.body
+  let createdBooksFromDB = await axios.post(url, bookObj);
+
+
+// TODO: get the created cat and add it to state
+this.setState({
+    books: [...this.state.books, createdBooksFromDB.data]
+  })
+
+} catch (error) {
+  console.log(error.message);
+}
+}
+
+// ******* DELETING A Book FROM DB ******
+
+deleteBook = async (id) => {
+  try {
+    // TODO: build the url for axios 
+  let url = `${process.env.REACT_APP_SERVER}/books/${id}`
+
+  await axios.delete(url);
+
+  // TODO: update state after cat was deleted
+  let updatedBooks = this.state.books.filter(books => books._id !== id);
+
+    this.setState({
+      books: updatedBooks
+    })
+
+  } catch (error) {
+    console.log(error.message)
   }
 }
 
-export default BestBooks;
+
+// HANDLE MODAL FUNCTION
+
+handleOpenModal = () => {
+  this.setState({
+    openModal: true
+  })
+}
+
+handleCloseModal = () => {
+  this.setState({
+    openModal: false
+  })
+}
+
+
+render() {
+ /* TODO: render all the books in a Carousel */
+
+return (
+  <>
+    <BookFormModal
+      // handleBooksSubmit={this.handleBooksSubmit}
+      show={this.state.openModal}
+      handleClose={this.handleCloseModal}
+      postBook={this.postBook}
+    />
+  
+  <Carousel>
+          {this.state.books.length > 0 ? (
+            this.state.books.map((book, index) => (
+            <Carousel.Item key={index}>
+              <Card className="books-card">
+                <Card.Img src={book.image} alt={book.title} />
+                <Card.Body>
+                <Card.Title>{book.title}</Card.Title>
+                <Card.Text>
+
+                <p>Description: {book.description}</p>
+                <p>Status: {book.status}</p>
+
+                    </Card.Text>
+                  </Card.Body>
+              </Card>
+            </Carousel.Item>
+            ))
+          ) : (
+          <h3>No Books Found</h3>
+          )}
+        </Carousel>
+</>
+);
+}
+}
+  
+  export default BestBooks;
+  
+  
+  
+  
+  
+  
