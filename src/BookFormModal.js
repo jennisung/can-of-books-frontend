@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { Form, Button } from 'react-bootstrap';
+import './styles/BookFormModal.css'
+
 
 class BookFormModal extends Component {
   handleBooksSubmit = (event) => {
@@ -7,7 +9,7 @@ class BookFormModal extends Component {
     let bookObj = {
       title: event.target.title.value,
       description: event.target.description.value,
-      status: event.target.status.value,
+      status: event.target.status.checked,
     };
     this.props.postBook(bookObj);
   };
@@ -16,6 +18,7 @@ class BookFormModal extends Component {
 
   render() {
     return (
+      <div className="form-div">
       <Form onSubmit={this.handleBooksSubmit}>
         <Form.Group controlId="title">
           <Form.Label>Book Title:</Form.Label>
@@ -26,11 +29,13 @@ class BookFormModal extends Component {
           <Form.Control type="text" placeholder="description" />
         </Form.Group>
         <Form.Group controlId="status">
-          <Form.Label>Status:</Form.Label>
-          <Form.Control type="text" placeholder="status" />
+          <Form.Label>Read Status:</Form.Label>
+          <Form.Check type="checkbox" label="Check If Read" />
         </Form.Group>
-        <Button type="submit">Add Book</Button>
+        <Button  variant="secondary" type="submit" className="form-button">Add Book</Button>
       </Form>
+      </div>
+
     );
   }
 }

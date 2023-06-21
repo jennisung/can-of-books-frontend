@@ -2,8 +2,9 @@ import React from 'react';
 import axios from 'axios';
 import Carousel from 'react-bootstrap/Carousel';
 import Card from 'react-bootstrap/Card';
-import BookFormModal from './BookFormModal'; 
+import BookFormModal from '../BookFormModal'; 
 import Button from 'react-bootstrap/Button';
+import UpdateBookModal from './UpdateBookModal';
 
 
 class BestBooks extends React.Component {
@@ -12,7 +13,9 @@ class BestBooks extends React.Component {
     super(props);
     this.state = {
       books: [],
-      openModal: false
+      openModal: false,
+      showModal: false,
+      bookToUpdate: {}
     };
   }
 
@@ -37,9 +40,6 @@ class BestBooks extends React.Component {
 // **** ADD CAT TO DB USING 2 HANDLERS ****
 
 // *** 1ST HANDLER IS GOING TO BUILD THE CAT OBJECT USING THE FORM DATA ****
-
-
-
 // *** 2nd HANDLER - POST THE Book OBJECT TO THE DATABASE AND UPDATE STATE WITH THE NEW CREATED Book****
 postBook = async (bookObj) => {
 try {
@@ -69,6 +69,7 @@ deleteBook = async (id) => {
 
   await axios.delete(url);
 
+
   // TODO: update state after cat was deleted
   let updatedBooks = this.state.books.filter(books => books._id !== id);
 
@@ -96,11 +97,48 @@ handleCloseModal = () => {
   })
 }
 
+openUpdateModal = (bookToUpdate) => {
+  console.log('book to update:', bookToUpdate)
+  this.setState({
+    showModal:true,
+    bookToUpdate: bookToUpdate
+  })
+}
+
+closeUpdateModal = () => {
+  this.setState({
+    showModal:false
+  })
+}
+
+
+putBook = async (bookObj) => {
+  try {
+    let url = `${process.env.REACT_APP_SERVER}/books/${bookObj._id}`;
+
+    console.log(url);
+
+    let updatedBookFromAxios = await axios.put(url, bookObj);
+
+    console.log(updatedBookFromAxios);
+
+    let updatedBookArray = this.state.books.map(existingBook => {
+      return existingBook._id === bookObj._id
+      ? updatedBookFromAxios.data
+      : existingBook
+    });
+
+    this.setState({
+      books: updatedBookArray
+    })
+  } catch (error) {
+    console.log(error.message);
+  }
+}
 
 
 render() {
  /* TODO: render all the books in a Carousel */
-
 return (
   <>
     <BookFormModal
@@ -109,7 +147,14 @@ return (
       handleClose={this.handleCloseModal}
       postBook={this.postBook}
       onBookDelete={this.handleBookDelete} 
+      openUpdateModal={this.openUpdateModal}
 
+    />
+    <UpdateBookModal 
+    showModal={this.state.showModal} 
+    closeUpdateModal={this.closeUpdateModal} 
+    bookToUpdate={this.state.bookToUpdate}
+    putBook={this.putBook}
     />
   
   <Carousel>
@@ -127,7 +172,13 @@ return (
                     </Card.Text>
                   </Card.Body>
               </Card>
-              <Carousel.Caption> <Button onClick={()=> {this.deleteBook(book._id)}}>Delete</Button></Carousel.Caption>
+              <Carousel.Caption> 
+
+                <Button variant="secondary" onClick={()=> {this.deleteBook(book._id)}}>Delete</Button>
+                <Button variant="secondary" onClick={() => this.openUpdateModal(book)}>Update Book</Button>
+
+
+              </Carousel.Caption>
             </Carousel.Item>
 
             ))
