@@ -3,8 +3,11 @@ import axios from 'axios';
 import Carousel from 'react-bootstrap/Carousel';
 import Card from 'react-bootstrap/Card';
 import BookFormModal from './BookFormModal'; 
+import Button from 'react-bootstrap/Button';
+
 
 class BestBooks extends React.Component {
+
   constructor(props) {
     super(props);
     this.state = {
@@ -94,6 +97,7 @@ handleCloseModal = () => {
 }
 
 
+
 render() {
  /* TODO: render all the books in a Carousel */
 
@@ -104,25 +108,28 @@ return (
       show={this.state.openModal}
       handleClose={this.handleCloseModal}
       postBook={this.postBook}
+      onBookDelete={this.handleBookDelete} 
+
     />
   
   <Carousel>
           {this.state.books.length > 0 ? (
             this.state.books.map((book, index) => (
+              
             <Carousel.Item key={index}>
               <Card className="books-card">
                 <Card.Img src={book.image} alt={book.title} />
                 <Card.Body>
                 <Card.Title>{book.title}</Card.Title>
                 <Card.Text>
-
                 <p>Description: {book.description}</p>
                 <p>Status: {book.status}</p>
-
                     </Card.Text>
                   </Card.Body>
               </Card>
+              <Carousel.Caption> <Button onClick={()=> {this.deleteBook(book._id)}}>Delete</Button></Carousel.Caption>
             </Carousel.Item>
+
             ))
           ) : (
           <h3>No Books Found</h3>
