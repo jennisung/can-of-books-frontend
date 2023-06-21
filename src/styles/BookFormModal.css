@@ -2,10 +2,15 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-bottom: 75px;
+  margin-top: 25px;
 }
 
 .form-button {
   display: flex;
   justify-content: center;
   margin-top: 16px;
+
 }
+
+
