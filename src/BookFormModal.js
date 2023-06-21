@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Form, Button } from 'react-bootstrap';
-import axios from 'axios';
 
 class BookFormModal extends Component {
   handleBooksSubmit = (event) => {
@@ -31,8 +30,6 @@ class BookFormModal extends Component {
           <Form.Control type="text" placeholder="status" />
         </Form.Group>
         <Button type="submit">Add Book</Button>
-        {/* <Button onClick={this.deleteBook}>Delete</Button> */}
-        {/* <Button onClick={() => this.props.deleteBook(this.props.books._id)}>Delete</Button> */}
       </Form>
     );
   }
