@@ -141,15 +141,14 @@ render() {
  /* TODO: render all the books in a Carousel */
 return (
   <>
-    <BookFormModal
-      // handleBooksSubmit={this.handleBooksSubmit}
-      show={this.state.openModal}
-      handleClose={this.handleCloseModal}
-      postBook={this.postBook}
-      onBookDelete={this.handleBookDelete} 
-      openUpdateModal={this.openUpdateModal}
+<BookFormModal
+  show={this.state.openModal}
+  handleClose={this.handleCloseModal}
+  postBook={this.postBook}
+  onBookDelete={this.handleBookDelete} 
+  openUpdateModal={this.openUpdateModal}
+/>
 
-    />
     <UpdateBookModal 
     showModal={this.state.showModal} 
     closeUpdateModal={this.closeUpdateModal} 
