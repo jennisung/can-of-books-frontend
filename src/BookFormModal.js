@@ -14,7 +14,7 @@ class BookFormModal extends Component {
     this.props.postBook(bookObj);
   };
 
- 
+
 
   render() {
     return (
@@ -42,6 +42,12 @@ class BookFormModal extends Component {
 }
 
 export default BookFormModal;
+
+
+
+
+
+
 
 
 // import React, { Component } from 'react';
