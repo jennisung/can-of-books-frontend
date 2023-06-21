@@ -19,7 +19,8 @@ class BookFormModal extends Component {
   render() {
     return (
       <div className="form-div">
-      <Form onSubmit={this.handleBooksSubmit}>
+      {/* <Form onSubmit={this.handleBooksSubmit}> */}
+      <Form onSubmit={this.props.postBook}>
         <Form.Group controlId="title">
           <Form.Label>Book Title:</Form.Label>
           <Form.Control type="text" placeholder="title" />
