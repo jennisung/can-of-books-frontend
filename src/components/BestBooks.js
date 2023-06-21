@@ -5,6 +5,8 @@ import Card from 'react-bootstrap/Card';
 import BookFormModal from '../BookFormModal'; 
 import Button from 'react-bootstrap/Button';
 import UpdateBookModal from './UpdateBookModal';
+import '../styles/BestBooks.css'
+
 
 
 class BestBooks extends React.Component {
@@ -156,28 +158,35 @@ return (
     putBook={this.putBook}
     />
   
-  <Carousel>
+  <Carousel className='carousel-container'>
           {this.state.books.length > 0 ? (
             this.state.books.map((book, index) => (
               
             <Carousel.Item key={index}>
               <Card className="books-card">
-                <Card.Img src={book.image} alt={book.title} />
+
+                <Card.Img src={book.image} alt={book.title} className="card-image" />
                 <Card.Body>
+               <Carousel.Caption> 
+                
+                <Button variant="secondary" onClick={()=> {this.deleteBook(book._id)}}>Delete</Button>
+                <span style={{ margin: '0 6px' }}></span> 
+                <Button variant="secondary" onClick={() => this.openUpdateModal(book)}>Update Book</Button>
+
+                 </Carousel.Caption>
                 <Card.Title>{book.title}</Card.Title>
                 <Card.Text>
                 <p>Description: {book.description}</p>
-                <p>Status: {book.status}</p>
+                <p>Status: {book.status} </p>
                     </Card.Text>
                   </Card.Body>
               </Card>
-              <Carousel.Caption> 
-
+              {/* <Carousel.Caption> 
+                
                 <Button variant="secondary" onClick={()=> {this.deleteBook(book._id)}}>Delete</Button>
                 <Button variant="secondary" onClick={() => this.openUpdateModal(book)}>Update Book</Button>
 
-
-              </Carousel.Caption>
+              </Carousel.Caption> */}
             </Carousel.Item>
 
             ))
@@ -194,6 +203,5 @@ return (
   
   
   
-  
-  
+    
   

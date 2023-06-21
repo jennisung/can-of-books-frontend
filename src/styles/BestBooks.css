@@ -1,0 +1,27 @@
+.card-image {
+  max-width: 450px; 
+  max-height: 650px; 
+}
+
+.carousel-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.books-card {
+  max-width: 450px;
+  margin: 0 auto;
+}
+
+
+
+.card-container {
+  display: flex;
+  justify-content: center;
+}
+
+.card-body {
+  margin-bottom: 30px;
+}
