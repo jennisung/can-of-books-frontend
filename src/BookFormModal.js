@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Form, Button } from 'react-bootstrap';
-import './styles/BookFormModal.css'
-
+import './styles/BookFormModal.css';
 
 class BookFormModal extends Component {
   handleBooksSubmit = (event) => {
@@ -14,35 +13,30 @@ class BookFormModal extends Component {
     this.props.postBook(bookObj);
   };
 
-
-
   render() {
     return (
       <div className="form-div">
-      {/* <Form onSubmit={this.handleBooksSubmit}> */}
-      <Form onSubmit={this.props.postBook}>
-        <Form.Group controlId="title">
-          <Form.Label>Book Title:</Form.Label>
-          <Form.Control type="text" placeholder="title" />
-        </Form.Group>
-        <Form.Group controlId="description">
-          <Form.Label>Description:</Form.Label>
-          <Form.Control type="text" placeholder="description" />
-        </Form.Group>
-        <Form.Group controlId="status">
-          <Form.Label>Read Status:</Form.Label>
-          <Form.Check type="checkbox" label="Check If Read" />
-        </Form.Group>
-        <Button  variant="secondary" type="submit" className="form-button">Add Book</Button>
-      </Form>
+        <Form onSubmit={this.handleBooksSubmit}>
+          <Form.Group controlId="title">
+            <Form.Label className="form-label">Book Title:</Form.Label>
+            <Form.Control className="form-control" type="text" placeholder="title" />
+          </Form.Group>
+          <Form.Group controlId="description">
+            <Form.Label className="form-label">Description:</Form.Label>
+            <Form.Control className="form-control" type="text" placeholder="description" />
+          </Form.Group>
+          <Form.Group controlId="status">
+            <Form.Label className="form-label">Read Status:</Form.Label>
+            <Form.Check className="checkbox-input" type="checkbox" label="Check If Read" />
+          </Form.Group>
+          <Button variant="secondary" type="submit" className="form-button">Add Book</Button>
+        </Form>
       </div>
-
     );
   }
 }
 
 export default BookFormModal;
-
 
 
 

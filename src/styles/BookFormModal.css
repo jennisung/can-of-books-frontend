@@ -13,4 +13,41 @@
 
 }
 
+.form-div {
+  background-color: cornflowerblue;
+  padding: 20px;
+}
 
+.form-label {
+  color: #333;
+  font-weight: bold;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-button {
+  background-color: yellow;
+  border-color: #007bff;
+}
+
+.form-button:hover {
+  background-color: #0069d9;
+  border-color: #0062cc;
+}
+
+.checkbox-label {
+  font-weight: normal;
+}
+
+.checkbox-input {
+  margin-right: 5px;
+}
+
+.form-title {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20px;
+}
